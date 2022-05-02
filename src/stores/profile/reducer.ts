@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { fetchProfile } from "./actions";
+import { fetchProfile, profileError } from "./actions";
 
 export type ProfileState = {
   data: any;
@@ -24,6 +24,9 @@ export const profileReducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchProfile.rejected, (state) => {
       state.status = false;
+      state.error = true;
+    })
+    .addCase(profileError, (state, action) => {
       state.error = true;
     });
 });

@@ -4,7 +4,7 @@ export const fetchRepo = createAsyncThunk(
   "repo/updateRepo",
   async (arg: any) => {
     const response = await fetch(
-      `https://api.github.com/users/${arg.username}/repos?per_page=50`
+      `https://api.github.com/users/${arg.username}/repos?per_page=20`
     );
     return response.json();
   }

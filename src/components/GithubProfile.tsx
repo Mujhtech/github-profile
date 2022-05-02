@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../stores/hook";
 import { faUsers, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
@@ -13,11 +13,23 @@ export default function GithubProfile() {
   const { datas } = useAppSelector((state) => state.repo);
   const dispatch = useAppDispatch();
 
+  const [keyword, setKeyword] = useState("");
+
   useEffect(() => {
+      
     if (data != null && datas == null) {
       dispatch(fetchRepo({ username: data.login }));
     }
-  });
+  }, []);
+
+  const filterRepo = () => {
+    if (keyword === "") {
+      return datas;
+    }
+    return datas.filter((repo: any) => {
+      return repo.name.toLowerCase().includes(keyword.toLowerCase());
+    });
+  };
 
   return (
     <div className="min-h-screen">
@@ -82,17 +94,16 @@ export default function GithubProfile() {
             </div>
             <div className="flex flex-col">
               <div className="w-full border-b flex flex-row py-3">
-                <div>
-                  <input
-                    type="text"
-                    name="search"
-                    placeholder="Find a repository..."
-                    className="w-2/3 border-2 border-[#F5F8FA] focus:border-blue-600 focus:right-0 focus:outline-none py-1 px-4 rounded-md"
-                  />
-                </div>
+                <input
+                  type="text"
+                  name="search"
+                  onChange={(e) => setKeyword(e.target.value)}
+                  placeholder="Find a repository..."
+                  className="w-2/3 border-2 focus:border-blue-600 focus:right-0 focus:outline-none py-1 px-4 rounded-md"
+                />
               </div>
-              {datas != null &&
-                datas.map((data: any, index: any) => (
+              {filterRepo() != null &&
+                filterRepo().map((data: any, index: any) => (
                   <RepoCard key={index} data={data} />
                 ))}
             </div>

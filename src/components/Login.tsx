@@ -4,7 +4,12 @@ export default function Login() {
   return (
     <div className="bg-white flex justify-center min-h-screen">
       <div className="flex justify-center items-center">
-        <button className="inline-flex items-center justify-center space-x-2 text-black bg-white border border-black rounded-md px-2 py-3">
+        <button
+          onClick={function () {
+            window.location.href = `https://github.com/login/oauth/authorize?scope=user&client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
+          }}
+          className="inline-flex items-center justify-center space-x-2 text-black bg-white border border-black rounded-md px-2 py-3"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

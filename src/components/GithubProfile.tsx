@@ -20,7 +20,7 @@ export default function GithubProfile() {
     if (data != null && datas == null) {
       dispatch(fetchRepo({ username: data.login }));
     }
-  }, []);
+  });
 
   const filterRepo = () => {
     if (keyword === "") {
